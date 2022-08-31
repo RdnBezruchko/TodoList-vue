@@ -45,58 +45,60 @@
 </style>
 
 <script>
+import { ref } from '@vue/reactivity'
 export default {
   	name: 'To do list',
-  	data() {
-    	return {
-			isEditing: false,
-			selectedIndex: null,
-			todo: {
-				itemName: '',
-				// status: 'open',
-				dateTimeUtc: ''
-			},
-    		todos: []
-    	}
-  	},
-	methods: {
-		addTodo() {
-			if (this.todo.itemName.length === 0) {
+	setup(){
+		const isEditing = ref(false)
+		const selectedIndex = ref(null)
+		const todo = ref({
+			itemName: '',
+			dateTimeUtc: ''
+		})
+		const todos = ref([])
+		function addTodo() {
+			if (todo.value.itemName.length === 0) {
 				return
 			}
-			this.todos.push({itemName:this.todo.itemName, dateTimeUtc: (new Date()).toUTCString()})
-			this.todo.dateTimeUtc = new Date().toISOString()
+			todos.value.push({itemName:todo.value.itemName, dateTimeUtc: (new Date()).toUTCString()})
+			todo.value.dateTimeUtc = new Date().toISOString()
 			const requestOptions = {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(this.todo)
+				body: JSON.stringify(todo)
   			};
 			// console.log(JSON.stringify(this.todo))
-  			fetch("https://item-management.azurewebsites.net/api/items", requestOptions)
-			this.todo.itemName = ''
-		},
-
-		editTodo(index, todo) {
-			this.todo = todo
-			this.selectedIndex = index
-			this.isEditing = true
-		},
-
-		done(index, todo) {
-			todo.status='done'
-			done = !done
-		},
-
-		updateTodo() {
-			this.todos.splice(this.selectedIndex, 1, {...this.todo})
-			this.isEditing = false
-			this.todo.itemName = ''
-			
-		},
-
-		deleteTodo(index) {
-			this.todos.splice(index, 1)
+  			// fetch("https://item-management.azurewebsites.net/api/items", requestOptions)
+			todo.value.itemName = ''
 		}
-	}
+		function editTodo(index, item) {
+			todo.value = item
+			selectedIndex.value = index
+			isEditing.value = true
+		} 
+		function done(index, todo) {
+			todo.status='done'
+		}
+		function updateTodo() {
+			todos.value.splice(selectedIndex.value, 1, {...todo.value})
+			isEditing.value = false
+			todo.value.itemName = ''
+		}
+		function deleteTodo(index) {
+			todos.value.splice(index, 1)
+		}
+		return {
+			isEditing,
+			selectedIndex,
+			todo,
+			todos,
+			addTodo,
+			editTodo,
+			done,
+			updateTodo,
+			deleteTodo
+
+		}
+	},
 }  
 </script>
