@@ -3,7 +3,7 @@
 		<div class="wrapper" id="tasklist">  
 			<h1 class="todolist_header">ToDo List</h1>
 		<div v-if="!isEditing" class="todolist_subheader">
-			<input class="todolist_placeholder" type="text" placeholder="Add TO DO" v-model="todo.itemName" >
+			<input class="todolist_placeholder" type="text" placeholder="Add TO DO" v-model="todo.itemName"  @keyup.enter="addTodo">
 			<button class="todolist_btn add" value="add" @click="addTodo">ADD</button>
 		</div>
 		<div v-else class="todolist_subheader">
@@ -39,7 +39,7 @@
 		/>
 		<!-- 
 		<TodoContent 
-		v-for="(todo, index) in todos"  
+		v-for="(todo, index) in todos"  - обеъ
 		:key="index" 
 		:todo="todo"
 		:index="index"
@@ -66,7 +66,6 @@ export default {
 		const isEditing = ref(false)
 		const selectedIndex = ref(null)
 		const todo = ref({
-
 			itemName: '',
 			dateTimeUtc: '',
 			isStrikeThrough: false
@@ -79,7 +78,7 @@ export default {
 			todo.value = item
 			selectedIndex.value = index
 			isEditing.value = true
-			console.log(index, item)
+			// console.log(index, item)
 		}
 		function addTodo() {
 			if (todo.value.itemName.length === 0) {
@@ -92,11 +91,11 @@ export default {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(todo)
   			};
+			
 			// console.log(JSON.stringify(this.todo))
   			// fetch("https://item-management.azurewebsites.net/api/items", requestOptions)
 			todo.value.itemName = ''
-		}
-		
+		}		
 		function updateTodo() {
 			todos.value.splice(selectedIndex.value, 1, {...todo.value})
 			isEditing.value = false
