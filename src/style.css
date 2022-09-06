@@ -99,6 +99,10 @@
 .todolist_content_text {
     line-height: 34px;
     margin-right: 10px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     
     width: 108px;
     word-wrap: break-word;
