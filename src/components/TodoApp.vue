@@ -69,7 +69,7 @@ export default {
 		fetch('https://item-management.azurewebsites.net/api/items') // get запрос
 		.then(response => response.json())
 		.then(todo => todos.value = todo)
-		 .then(json => console.log(json))
+		.then(json => console.log(json))
 		// .then(json => { todos.value = json }) - выводит контент на экран
 		const isEditing = ref(false)
 		const selectedIndex = ref(null)
@@ -124,7 +124,7 @@ export default {
 				body: JSON.stringify(todo.value)
   			}		
 			console.log(JSON.stringify(todo.value))
-  			fetch("https://item-management.azurewebsites.net/api/items", postRequest)
+  			fetch("https://item-management.azurewebsites.net/api/items", postRequest) // post запрос
 			.then(response => response.json(window.location.reload()))
 			todo.value.itemName = ''
 			
@@ -140,7 +140,7 @@ export default {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(todo.value)
 			};
-			fetch("https://item-management.azurewebsites.net/api/items/", putOptions)
+			fetch("https://item-management.azurewebsites.net/api/items/", putOptions) // put запрос
 			.then(response => response.json())
 			console.log(JSON.stringify(todo.value))
 			todo.value.itemName = ''
@@ -161,3 +161,158 @@ export default {
 	
 }  
 </script>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+.center {
+    width: 100%;
+    /* height: 100vh; */
+    margin: 0 auto;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    
+}
+
+.wrapper {
+    margin-top: 150px;
+    max-width: 400px;
+    width: 100%;
+    max-height: 100%;
+    background-color: rgba( 185, 185, 185, .12);   
+    padding: 25px;
+}
+
+.todolist_header {
+    text-align: center;
+    color: #5162bc;
+}
+
+.todolist_subheader {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px 0 30px;
+
+    margin-top: 10px;
+}
+
+.todolist_subheader input {
+    margin-right: 30px;
+    border: none;
+    border-bottom: 1px #a3a3a3 solid;
+    padding: 5px;
+
+    color: #000; 
+}
+.todolist_subheader input::placeholder {
+    color: #9f9f9f;
+}
+
+.todolist_btn {
+    padding: 10px 20px 10px 20px;
+    border: none;
+
+    cursor: pointer;
+    color: #b6b6b6;
+    border-radius: 5px;
+
+    transition: .3s all;
+}
+
+.todolist_btn:hover {
+    background-color: #c0c0c0;
+    color:#000;
+}
+
+.todolist_descr {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 105px 0 55px;
+
+    margin-top: 25px;
+}
+
+.todolist_descr .task {
+    font-weight: bold;
+}
+
+.todolist_descr .action {
+    font-weight: bold;
+}
+
+.todolist_content {
+    display: flex;
+    justify-content: right;
+    margin-top: 15px;
+    padding: 0;
+    list-style: none;
+}
+
+.todolist_content.mt-5 {
+    margin-top: 5px;
+
+}
+
+.todolist_content_text {
+    line-height: 34px;
+    margin-right: 10px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    
+    width: 108px;
+    word-wrap: break-word;
+
+
+}
+
+.todolist_content_btn {
+    padding: 0 15px;
+    line-height: 32px;
+    border: 1px #000 solid;
+    cursor: pointer;
+    height: 34px;
+}
+
+
+.todolist_content .edit {
+    border-color: #5162bc;
+    color: #4a5ab9;
+    background-color: white;
+    margin-right: 5px;
+}
+
+
+
+.todolist_content .done {
+    border-color: #fb9cbe;
+    color: #f6246f;
+    background-color: white;
+    margin-right: 5px;
+}
+
+
+
+.todolist_content .delete {
+    border-color: #cccccc;
+    color: #414141;
+    background-color: white;
+    margin-right: 5px;
+}
+
+.strikethrough {
+    text-decoration: line-through; 
+}
+
+</style>

@@ -17,7 +17,7 @@ export default {
             default: () => ({})            
         },
         index: {
-            type: Number,    // type number - потому что число
+            type: Number,   
             required: true, 
             default: 0   
         }
@@ -52,4 +52,9 @@ export default {
 }
 </script>
 
+<style>
+
+
+
+</style>
 
